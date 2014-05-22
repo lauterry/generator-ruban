@@ -12,9 +12,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.pkg = require('../package.json');
 
 		this.on('end', function () {
-			if (!this.options['skip-install']) {
 
-			}
 		});
 	},
 
@@ -82,10 +80,11 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.template('_index.html', 'index.html')
 		this.template('_bower.json','bower.json');
 		this.template('_package.json','package.json');
+		this.copy('Gruntfile.js','Gruntfile.js');
 		this.installDependencies();
 	},
 
-	_generateGruntfile: function () {
+	generateGruntfile: function () {
 
 		if (this.livereload) {
 			this.gruntfile.insertConfig('csslint', "{ options: { csslintrc: '.csslintrc' }, all : { src : ['<%%= assetsDir %>/css/**/*.css']}}");
