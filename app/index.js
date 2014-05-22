@@ -3,7 +3,8 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
-var chalk = require('chalk');
+var chalk = require('chalk')
+var wiredep = require('wiredep');
 
 
 var RubanGenerator = yeoman.generators.Base.extend({
@@ -12,9 +13,15 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.pkg = require('../package.json');
 
 		this.on('end', function () {
-			if (!this.options['skip-install']) {
 
-			}
+			wiredep({
+				directory: 'bower_components',
+				bowerJson: this.dest.readJSON('bower.json'),
+				src: 'index.html'
+			});
+
+			this.log(chalk.green("\nFélicitation, vous êtes désormais prêt à coder votre présentation avec Ruban"));
+			this.log(chalk.blue("Pour plus détails, visitez " + chalk.underline("http://loicfrering.github.io/ruban/#/getting-started") + '\n'));
 		});
 	},
 
@@ -82,10 +89,14 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.template('_index.html', 'index.html')
 		this.template('_bower.json','bower.json');
 		this.template('_package.json','package.json');
-		this.installDependencies();
+		this.installDependencies({
+			callback : function() {
+				this.log("FINISHED");
+			}.bind(this)
+		});
 	},
 
-	_generateGruntfile: function () {
+	generateGruntfile: function () {
 
 		if (this.livereload) {
 			this.gruntfile.insertConfig('csslint', "{ options: { csslintrc: '.csslintrc' }, all : { src : ['<%%= assetsDir %>/css/**/*.css']}}");
