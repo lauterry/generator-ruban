@@ -13,7 +13,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 
 		this.on('end', function () {
 			if (!this.options['skip-install']) {
-				//this.installDependencies();
+
 			}
 		});
 	},
@@ -52,6 +52,18 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				when: function (answers) {
 					return answers.firstSlide === true;
 				}
+			},
+			{
+				type: 'confirm',
+				name: 'livereload',
+				message: 'Do you want livereload ?',
+				default: false
+			},
+			{
+				type: 'confirm',
+				name: 'csslint',
+				message: 'Do you want to lint your css ?',
+				default: false
 			}
 		];
 
@@ -60,6 +72,8 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			this.title = props.title;
 			this.author = props.author;
 			this.twitter = props.twitter;
+			this.livereload = props.livereload;
+			this.csslint = props.csslint;
 			done();
 		}.bind(this));
 	},
@@ -67,7 +81,20 @@ var RubanGenerator = yeoman.generators.Base.extend({
 	app: function () {
 		this.template('_index.html', 'index.html')
 		this.template('_bower.json','bower.json');
-		this.bowerInstall();
+		this.template('_package.json','package.json');
+		this.installDependencies();
+	},
+
+	_generateGruntfile: function () {
+
+		if (this.livereload) {
+			this.gruntfile.insertConfig('csslint', "{ options: { csslintrc: '.csslintrc' }, all : { src : ['<%%= assetsDir %>/css/**/*.css']}}");
+		}
+
+		if (this.csslint) {
+			this.gruntfile.insertConfig('browserSync', "{ dev : { bsFiles : { src : ['**/*html', '**/*.css', '**/*js', '!bower_components', '!node_modules'] }}}");
+		}
+
 	}
 
 });
