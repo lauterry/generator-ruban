@@ -7,12 +7,13 @@ var chalk = require('chalk');
 
 
 var RubanGenerator = yeoman.generators.Base.extend({
+
 	init: function () {
 		this.pkg = require('../package.json');
 
 		this.on('end', function () {
 			if (!this.options['skip-install']) {
-				this.installDependencies();
+				//this.installDependencies();
 			}
 		});
 	},
@@ -25,32 +26,50 @@ var RubanGenerator = yeoman.generators.Base.extend({
 
 		var prompts = [
 			{
+				type: 'input',
+				name: 'title',
+				message: 'What is the title of your prez ?',
+				default: 'A great prez'
+			},
+			{
 				type: 'confirm',
-				name: 'someOption',
-				message: 'Would you like to enable this option?',
+				name: 'firstSlide',
+				message: 'Do you want me to generate the first slide with the title, your name et your twitter account ?',
 				default: true
+			},
+			{
+				type: 'input',
+				name: 'author',
+				message: "What is your name ?",
+				when: function (answers) {
+					return answers.firstSlide === true;
+				}
+			},
+			{
+				type: 'input',
+				name: 'twitter',
+				message: "What is your twitter account ?",
+				when: function (answers) {
+					return answers.firstSlide === true;
+				}
 			}
 		];
 
 		this.prompt(prompts, function (props) {
-			this.someOption = props.someOption;
-
+			this.firstSlide = props.firstSlide;
+			this.title = props.title;
+			this.author = props.author;
+			this.twitter = props.twitter;
 			done();
 		}.bind(this));
 	},
 
 	app: function () {
-		this.mkdir('app');
-		this.mkdir('app/templates');
-
-		this.copy('_package.json', 'package.json');
-		this.copy('_bower.json', 'bower.json');
-	},
-
-	projectfiles: function () {
-		this.copy('editorconfig', '.editorconfig');
-		this.copy('jshintrc', '.jshintrc');
+		this.template('_index.html', 'index.html')
+		this.template('_bower.json','bower.json');
+		this.bowerInstall();
 	}
+
 });
 
 module.exports = RubanGenerator;
