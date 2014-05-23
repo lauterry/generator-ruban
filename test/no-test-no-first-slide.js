@@ -30,7 +30,7 @@ describe('No first slide', function () {
 			'index.html',
 			'package.json'
 		];
-		helpers.assertFile(expected);
+		assert.file(expected);
 		done();
 	});
 
