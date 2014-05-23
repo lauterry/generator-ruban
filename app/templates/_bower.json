@@ -1,8 +1,11 @@
 {
-  "name": "<%= _.slugify(_.humanize(title)) %>",
-  "dependencies": {
-	  "ruban": "~0.3.0",
-	  "font-awesome": "~4.1.0"
-  }
+	"name": "<%= _.slugify(_.humanize(title)) %>",
+	"dependencies": {
+		"ruban": "~0.3.0",
+		"font-awesome": "~4.1.0"
+	},
+	"resolutions": {
+		"font-awesome": "~4.1.0"
+	}
 }
 

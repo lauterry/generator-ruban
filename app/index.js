@@ -14,11 +14,13 @@ var RubanGenerator = yeoman.generators.Base.extend({
 
 		this.on('end', function () {
 
-			wiredep({
-				directory: 'bower_components',
-				bowerJson: this.dest.readJSON('bower.json'),
-				src: 'index.html'
-			});
+			if (!this.options['skip-install']) {
+				wiredep({
+					directory: 'bower_components',
+					bowerJson: this.dest.readJSON('bower.json'),
+					src: 'index.html'
+				});
+			};
 
 			this.log(chalk.green("\nFélicitation, vous êtes désormais prêt à coder votre présentation avec Ruban"));
 			this.log(chalk.blue("Pour plus détails, visitez " + chalk.underline("http://loicfrering.github.io/ruban/#/getting-started") + '\n'));
@@ -89,23 +91,29 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.template('_index.html', 'index.html')
 		this.template('_bower.json','bower.json');
 		this.template('_package.json','package.json');
-		this.installDependencies({
-			callback : function() {
-				this.log("FINISHED");
-			}.bind(this)
-		});
+
 	},
 
 	generateGruntfile: function () {
 
-		if (this.livereload) {
+		if (this.csslint) {
 			this.gruntfile.insertConfig('csslint', "{ options: { csslintrc: '.csslintrc' }, all : { src : ['<%%= assetsDir %>/css/**/*.css']}}");
 		}
 
-		if (this.csslint) {
+		if (this.livereload) {
 			this.gruntfile.insertConfig('browserSync', "{ dev : { bsFiles : { src : ['**/*html', '**/*.css', '**/*js', '!bower_components', '!node_modules'] }}}");
 		}
 
+	},
+
+	installDependencides : function () {
+		if (!this.options['skip-install']) {
+			this.installDependencies({
+				callback: function () {
+					this.log("FINISHED");
+				}.bind(this)
+			});
+		}
 	}
 
 });
