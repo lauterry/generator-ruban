@@ -37,10 +37,11 @@ module.exports = function (grunt) {
         }<% } %>
     });
 
-    grunt.registerTask('validate', ['csslint']);
+	<% if (csslint) { %>grunt.registerTask('validate', ['csslint']);<% } %>
 
+	<% if (livereload) { %>
 	grunt.registerTask('serve', [
-        'browserSync',
-        'watch'
-    ]);
+        'browserSync'<% if (csslint && livereload) { %>,
+        'watch'<% } %>
+    ]);<% } %>
 };

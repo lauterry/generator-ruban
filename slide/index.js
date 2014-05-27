@@ -31,7 +31,7 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 				type: "list",
 				name: 'type',
 				message: 'What kind of slide do you want ?',
-				choices: [  "titleOnly", "list", "text"  ],
+				choices: [  "titleOnly", "list", "text", "end"  ],
 				default: 0
 			}
 		];
@@ -42,27 +42,28 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 		}.bind(this));
 	},
 
+
 	app: function () {
+		var data = {
+			title : this.name
+		};
+
 		if(hasOption(this.type, 'titleOnly')) {
-			this._generateTitleOnly();
+			this._addSlide('titleOnlySlideTemplate.html', data);
 		} else if (hasOption(this.type, 'list')) {
-			this._generateList();
+			this._addSlide('listSlideTemplate.html', data);
+		} else if (hasOption(this.type, 'end')) {
+			data.twitter = this.config.get('twitter');
+			console.log(data.twitter);
+			this._addSlide('endSlideTemplate.html', data);
 		} else {
-			this._generatedText();
+			this._addSlide('textSlideTemplate.html', data);
 		}
-
 	},
 
-	_generateTitleOnly : function () {
-		this.appendToFile('index.html', 'body', '\n<section>\n\t<h1>' + this.name + '</h1>\n</section>\n');
-	},
-
-	_generateList: function () {
-		this.appendToFile('index.html', 'body', '\n<section>\n\t<h1>' + this.name + '</h1>\n\t<ul class="steps">\n\t\t<li></li>\n\t\t<li></li>\n\t</ul>\n</section>\n');
-	},
-
-	_generatedText: function () {
-		this.appendToFile('index.html', 'body', '\n<section>\n\t<h1>' + this.name + '</h1>\n\t<p>Lorem ipsum dolor sit amet.</p>\n</section>\n');
+	_addSlide : function (template, data) {
+		var slide = this.engine(this.src.read(template), data);
+		this.appendToFile('index.html', 'body', slide);
 	}
 
 });
