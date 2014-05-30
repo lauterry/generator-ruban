@@ -89,7 +89,8 @@ var RubanGenerator = yeoman.generators.Base.extend({
 	},
 
 	app: function () {
-		this.template('_index.html', 'index.html');
+		this.dest.mkdir('app');
+		this.template('_index.html', 'app/index.html');
 		this.template('_bower.json','bower.json');
 		this.template('_package.json','package.json');
 		if (this.csslint) {
@@ -100,14 +101,40 @@ var RubanGenerator = yeoman.generators.Base.extend({
 	generateGruntfile: function () {
 
 		if (this.csslint) {
-			this.gruntfile.insertConfig('csslint', "{ options: { csslintrc: '.csslintrc' }, all : { src : ['**/*.css', '!bower_components/**', '!node_modules/**']}}");
+			this.gruntfile.insertConfig('csslint', JSON.stringify(
+				{
+					options: {
+						csslintrc: '.csslintrc'
+					},
+					all : {
+						src : ['app/**/*.css']
+					}
+				}
+			));
 			this.gruntfile.registerTask('validate', 'csslint');
       		this.gruntfile.loadNpmTasks('grunt-contrib-csslint');
 		}
 
 		if (this.livereload) {
-			this.gruntfile.insertConfig('watch', "{ css : { files : ['**/*.css', '!bower_components', '!node_modules'] }}");
-			this.gruntfile.insertConfig('browserSync', "{ options: { watchTask: true }, dev : { bsFiles : { src : ['**/*.html', '**/*.css', '**/*.js', '!bower_components/**', '!node_modules/**'] }}}");
+			this.gruntfile.insertConfig('watch', JSON.stringify(
+				{
+					css : {
+						files : ['app/**/*.css']
+					}
+				}
+			));
+			this.gruntfile.insertConfig('browserSync', JSON.stringify(
+				{
+					options: {
+						watchTask: true
+					},
+					dev : {
+						bsFiles : {
+							src : ['app/**/*.html', 'app/**/*.css', 'app/**/*.js']
+						}
+					}
+				}
+			));
 			this.gruntfile.registerTask('serve', ['browserSync', 'watch']);
 			  this.gruntfile.loadNpmTasks('grunt-contrib-watch');
 			  this.gruntfile.loadNpmTasks('grunt-browser-sync');
@@ -115,7 +142,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 
 	},
 
-	installDependencides : function () {
+	installDependencies : function () {
 		if (!this.options['skip-install']) {
 			this.installDependencies({
 				callback: function () {

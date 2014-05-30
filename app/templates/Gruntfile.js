@@ -7,16 +7,14 @@ module.exports = function (grunt) {
 	    <% if (csslint) { %>
         csslint: {
             options: { csslintrc: '.csslintrc' },
-            all: { src: ['<%%= assetsDir %>/css/**/*.css'] }
+            all: { src: ['app/css/**/*.css'] }
         },<% } %>
 
 	    <% if (csslint && livereload) { %>
         watch: {
             css: {
                 files: [
-                    '**/*.css',
-                    '!bower_components',
-                    '!node_modules'
+                    'app/**/*.css'
                 ],
 				tasks: ['csslint']
             }
@@ -32,7 +30,12 @@ module.exports = function (grunt) {
 						'*.css',
 						'*.js'
 					]
-                }
+                },
+				options: {
+					server: {
+						baseDir: "app"
+					}
+				}
             }
         }<% } %>
     });
