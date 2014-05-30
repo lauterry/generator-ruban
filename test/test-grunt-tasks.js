@@ -8,7 +8,7 @@ describe('grunt tasks', function () {
 
 	before(function (done) {
 		helpers.run(path.join( __dirname, '../app'))
-			.inDir(path.join( __dirname, 'test/temp/grunt-tasks')) // Clear the directory and set it as the CWD
+			.inDir(path.join( __dirname, 'temp/grunt-tasks')) // Clear the directory and set it as the CWD
 			.withOptions({'skip-install' : true}) // Mock options passed in
 			.withArguments([]) // Mock the arguments
 			.withPrompt({
@@ -26,7 +26,7 @@ describe('grunt tasks', function () {
 	it('creates expected files', function (done) {
 		var expected = [
 			'bower.json',
-			'index.html',
+			'app/index.html',
 			'package.json',
 			'Gruntfile.js'
 		];

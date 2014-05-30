@@ -8,7 +8,7 @@ describe('First slide', function () {
 
 	before(function (done) {
 		helpers.run(path.join( __dirname, '../app'))
-			.inDir(path.join( __dirname, 'test/temp/first-slide')) // Clear the directory and set it as the CWD
+			.inDir(path.join( __dirname, 'temp/first-slide')) // Clear the directory and set it as the CWD
 			.withOptions({'skip-install' : true}) // Mock options passed in
 			.withArguments([]) // Mock the arguments
 			.withPrompt({
@@ -26,7 +26,7 @@ describe('First slide', function () {
 	it('creates expected files', function (done) {
 		var expected = [
 			'bower.json',
-			'index.html',
+			'app/index.html',
 			'package.json'
 		];
 		helpers.assertFile(expected);
@@ -34,10 +34,10 @@ describe('First slide', function () {
 	});
 
 	it('has first slide', function (done) {
-		assert.fileContent('index.html', /<title>Une présentation<\/title>/);
-		assert.fileContent('index.html', /<h1>Une présentation<\/h1>/);
-		assert.fileContent('index.html', /Thierry LAU/);
-		assert.fileContent('index.html', /laut3rry/);
+		assert.fileContent('app/index.html', /<title>Une présentation<\/title>/);
+		assert.fileContent('app/index.html', /<h1>Une présentation<\/h1>/);
+		assert.fileContent('app/index.html', /Thierry LAU/);
+		assert.fileContent('app/index.html', /laut3rry/);
 		done();
 	})
 
