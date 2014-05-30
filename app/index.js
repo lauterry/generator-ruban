@@ -1,6 +1,4 @@
 'use strict';
-var util = require('util');
-var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk')
@@ -10,11 +8,10 @@ var wiredep = require('wiredep');
 var RubanGenerator = yeoman.generators.Base.extend({
 
 	init: function () {
-		this.pkg = require('../package.json');
 
 		this.on('end', function () {
-
 			if (!this.options['skip-install']) {
+
 				wiredep({
 					directory: 'bower_components',
 					bowerJson: this.dest.readJSON('bower.json'),
@@ -25,6 +22,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			this.log(chalk.green("\nFélicitation, vous êtes désormais prêt à coder votre présentation avec Ruban"));
 			this.log(chalk.blue("Pour plus détails, visitez " + chalk.underline("http://loicfrering.github.io/ruban/#/getting-started") + '\n'));
 		});
+
 	},
 
 	askFor: function () {
@@ -84,6 +82,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			this.config.set('twitter', this.twitter);
 			this.livereload = props.livereload;
 			this.csslint = props.csslint;
+
 			done();
 		}.bind(this));
 	},
@@ -136,19 +135,15 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				}
 			));
 			this.gruntfile.registerTask('serve', ['browserSync', 'watch']);
-			  this.gruntfile.loadNpmTasks('grunt-contrib-watch');
-			  this.gruntfile.loadNpmTasks('grunt-browser-sync');
+			this.gruntfile.loadNpmTasks('grunt-contrib-watch');
+			this.gruntfile.loadNpmTasks('grunt-browser-sync');
 		}
 
 	},
 
-	installDependencies : function () {
+	installDeps : function () {
 		if (!this.options['skip-install']) {
-			this.installDependencies({
-				callback: function () {
-					this.log("FINISHED");
-				}.bind(this)
-			});
+			this.installDependencies();
 		}
 	}
 
