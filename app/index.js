@@ -92,26 +92,25 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.template('_index.html', 'index.html');
 		this.template('_bower.json','bower.json');
 		this.template('_package.json','package.json');
-		if (this.csslint || this.livereload) {
-			this.template('Gruntfile.js', 'Gruntfile.js');
-		}
-
 		if (this.csslint) {
 			this.copy("csslintrc", ".csslintrc");
 		}
 	},
 
-	_generateGruntfile: function () {
+	generateGruntfile: function () {
 
 		if (this.csslint) {
-			this.gruntfile.insertConfig('csslint', "{ options: { csslintrc: '.csslintrc' }, all : { src : ['<%%= assetsDir %>/css/**/*.css']}}");
+			this.gruntfile.insertConfig('csslint', "{ options: { csslintrc: '.csslintrc' }, all : { src : ['**/*.css', '!bower_components/**', '!node_modules/**']}}");
 			this.gruntfile.registerTask('validate', 'csslint');
+      		this.gruntfile.loadNpmTasks('grunt-contrib-csslint');
 		}
 
 		if (this.livereload) {
 			this.gruntfile.insertConfig('watch', "{ css : { files : ['**/*.css', '!bower_components', '!node_modules'] }}");
-			this.gruntfile.insertConfig('browserSync', "{ options: { watchTask: true }, dev : { bsFiles : { src : ['**/*html', '**/*.css', '**/*js', '!bower_components', '!node_modules'] }}}");
+			this.gruntfile.insertConfig('browserSync', "{ options: { watchTask: true }, dev : { bsFiles : { src : ['**/*.html', '**/*.css', '**/*.js', '!bower_components/**', '!node_modules/**'] }}}");
 			this.gruntfile.registerTask('serve', ['browserSync', 'watch']);
+			  this.gruntfile.loadNpmTasks('grunt-contrib-watch');
+			  this.gruntfile.loadNpmTasks('grunt-browser-sync');
 		}
 
 	},
