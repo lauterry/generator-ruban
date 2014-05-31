@@ -19,8 +19,8 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				});
 			};
 
-			this.log(chalk.green("\nFélicitation, vous êtes désormais prêt à coder votre présentation avec Ruban"));
-			this.log(chalk.blue("Pour plus détails, visitez " + chalk.underline("http://loicfrering.github.io/ruban/#/getting-started") + '\n'));
+			this.log(chalk.green("\nGreat, you're now ready to code your prez with Ruban"));
+			this.log(chalk.blue("For more details, please visit " + chalk.underline("http://loicfrering.github.io/ruban/#/getting-started") + '\n'));
 		});
 
 	},
