@@ -6,8 +6,10 @@ var assert = require('yeoman-generator').assert;
 
 describe('grunt tasks', function () {
 
-	before(function (done) {
-		helpers.run(path.join( __dirname, '../app'))
+	var gen;
+
+	beforeEach(function (done) {
+		gen = helpers.run(path.join( __dirname, '../app'))
 			.inDir(path.join( __dirname, 'temp/grunt-tasks')) // Clear the directory and set it as the CWD
 			.withOptions({'skip-install' : true}) // Mock options passed in
 			.withArguments([]) // Mock the arguments
@@ -18,9 +20,8 @@ describe('grunt tasks', function () {
 				twitter : "laut3rry",
 				livereload : true,
 				csslint : false
-			}) // Mock the prompt answers
-			.onEnd(done)
-
+			}); // Mock the prompt answers
+		done();
 	});
 
 	it('creates expected files', function (done) {
@@ -30,20 +31,28 @@ describe('grunt tasks', function () {
 			'package.json',
 			'Gruntfile.js'
 		];
-		helpers.assertFile(expected);
-		done();
+
+		gen.onEnd(function() {
+			helpers.assertFile(expected);
+			done();
+		});
+
 	});
 
 	it('has first slide', function (done) {
-		assert.fileContent('Gruntfile.js', /browserSync/);
-		assert.noFileContent('Gruntfile.js', /csslint/);
-		done();
-	})
+		gen.onEnd(function() {
+			assert.fileContent('Gruntfile.js', /browserSync/);
+			assert.noFileContent('Gruntfile.js', /csslint/);
+			done();
+		});
+	});
 
 	it('has expected npm dependencies', function (done) {
-		assert.fileContent('package.json', /grunt-browser-sync/);
-		assert.noFileContent('package.json', /grunt-contrib-csslint/);
-		done();
-	})
+		gen.onEnd(function() {
+			assert.fileContent('package.json', /grunt-browser-sync/);
+			assert.noFileContent('package.json', /grunt-contrib-csslint/);
+			done();
+		});
+	});
 
 });
