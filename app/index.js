@@ -19,7 +19,9 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			};
 
 			this.log(chalk.green("\nGreat, you're now ready to code your prez with Ruban"));
-			this.log(chalk.blue("For more details, please visit " + chalk.underline("http://loicfrering.github.io/ruban/#/getting-started") + '\n'));
+			this.log(chalk.green("\nYou can add a slide by running :"));
+			this.log(chalk.bgGreen("\n      yo ruban:slide 'a slide title'"));
+			this.log(chalk.blue("\nFor more details, please visit " + chalk.underline("http://loicfrering.github.io/ruban/#/getting-started") + '\n'));
 		});
 
 	},
@@ -92,7 +94,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.template('_bower.json','bower.json');
 		this.template('_package.json','package.json');
 		if (this.csslint) {
-			this.copy("csslintrc", ".csslintrc");
+			this.src.copy("csslintrc", ".csslintrc");
 		}
 	},
 
