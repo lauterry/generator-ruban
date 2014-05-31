@@ -11,11 +11,10 @@ var RubanGenerator = yeoman.generators.Base.extend({
 
 		this.on('end', function () {
 			if (!this.options['skip-install']) {
-
 				wiredep({
 					directory: 'bower_components',
 					bowerJson: this.dest.readJSON('bower.json'),
-					src: 'index.html'
+					src: 'app/index.html'
 				});
 			};
 
