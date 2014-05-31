@@ -63,7 +63,7 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 
 	_addSlide : function (template, data) {
 		var slide = this.engine(this.src.read(template), data);
-		this.appendToFile('index.html', 'body', slide);
+		this.appendToFile('app/index.html', 'body', slide);
 	}
 
 });
