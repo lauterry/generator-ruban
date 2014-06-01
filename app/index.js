@@ -20,6 +20,8 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			};
 
 			this.log(chalk.green("\nGreat, you're now ready to code your prez with Ruban"));
+			this.log(chalk.green("\nStart the server (with livereload) by running :"));
+			this.log(chalk.bgGreen("\n      grunt serve"));
 			this.log(chalk.green("\nYou can add a slide by running :"));
 			this.log(chalk.bgGreen("\n      yo ruban:slide 'a slide title'"));
 			this.log(chalk.blue("\nFor more details, please visit " + chalk.underline("http://loicfrering.github.io/ruban/#/getting-started") + '\n'));
