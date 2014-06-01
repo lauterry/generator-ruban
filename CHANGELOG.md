@@ -1,3 +1,9 @@
+## 0.1.1 (June 1st, 2014)
+
+Bug fixes:
+
+  - forgot to publish slide folder : subgenerator do not work
+
 ## 0.1.0 (June 1st, 2014)
 
 First release
