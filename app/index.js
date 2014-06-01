@@ -14,7 +14,8 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				wiredep({
 					directory: 'bower_components',
 					bowerJson: this.dest.readJSON('bower.json'),
-					src: 'app/index.html'
+					src: 'app/index.html',
+					exclude: [ 'bower_components/ruban/css/ruban-print.min.css' ]
 				});
 			};
 
@@ -126,7 +127,11 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			this.gruntfile.insertConfig('browserSync', JSON.stringify(
 				{
 					options: {
-						watchTask: true
+						watchTask: true,
+						server: {
+							baseDir: ".",
+							index: 'app/index.html'
+						}
 					},
 					dev : {
 						bsFiles : {

@@ -5,14 +5,18 @@
 	<title><%= title %></title>
 	<!-- bower:css -->
 	<!-- endbower -->
+	<link rel="stylesheet" href="../bower_components/ruban/css/ruban-print.min.css" media="print" />
 	<!-- bower:js -->
 	<!-- endbower -->
 	<script>
-		new Ruban();
+		$( document ).ready(function() {
+			new Ruban();
+		});
 	</script>
 </head>
 
 <body>
+
 <% if (firstSlide) {%>
 <section>
 	<div>
@@ -22,5 +26,6 @@
 	</div>
 </section>
 <% } %>
+
 </body>
 </html>
