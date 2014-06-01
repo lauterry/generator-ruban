@@ -29,6 +29,7 @@ describe('grunt tasks', function () {
 			'bower.json',
 			'app/index.html',
 			'package.json',
+			'app/js/app.js',
 			'Gruntfile.js'
 		];
 

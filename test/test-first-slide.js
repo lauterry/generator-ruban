@@ -34,7 +34,8 @@ describe('First slide', function () {
 			var expected = [
 				'bower.json',
 				'app/index.html',
-				'package.json'
+				'package.json',
+				'app/js/app.js'
 			];
 			gen.onEnd(function () {
 				helpers.assertFile(expected);
@@ -81,7 +82,8 @@ describe('First slide', function () {
 			var expected = [
 				'bower.json',
 				'app/index.html',
-				'package.json'
+				'package.json',
+				'app/js/app.js'
 			];
 
 			gen.onEnd(function () {

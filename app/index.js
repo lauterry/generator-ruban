@@ -75,7 +75,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				choices: [
 					{name : '4/3', value : 4/3},
 					{name : '16/9', value : 16/9}],
-				default: 0
+				default: 4/3
 			}, {
 				type: 'input',
 				name: 'minPadding',
