@@ -1,41 +1,16 @@
-# generator-ruban [![Build Status](https://secure.travis-ci.org/lauterry/generator-ruban.png?branch=master)](https://travis-ci.org/lauterry/generator-ruban)
+# generator-ruban
 
-> [Yeoman](http://yeoman.io) generator
+This is a yeoman generator for [RubanJS](https://github.com/loicfrering/ruban), a presentation framework made by [Loïc Frering](https://github.com/loicfrering).
 
+See a demo of [Ruban](http://loicfrering.github.io/ruban/#/ruban)
 
-## Getting Started
+## Getting started
 
-### What is Yeoman?
+* ```grunt serve``` to launch a server with livereload
+* ```grunt validate``` to lint your css
+* ```yo ruban:slide 'A slide title'``` to add a slide with a title
 
-Trick question. It's not a thing. It's this guy:
-
-![](http://i.imgur.com/JHaAlBJ.png)
-
-Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
-
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
-
-```bash
-$ npm install -g yo
-```
-
-### Yeoman Generators
-
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
-
-To install generator-ruban from npm, run:
-
-```bash
-$ npm install -g generator-ruban
-```
-
-Finally, initiate the generator:
-
-```bash
-$ yo ruban
-```
-
-### Getting To Know Yeoman
+## Getting To Know Yeoman
 
 Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
 
