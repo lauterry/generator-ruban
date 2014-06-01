@@ -130,7 +130,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				stripHtmlInToc : props.stripHtmlInToc,
 				bindClicks : props.bindClicks,
 				bindMouseWheel : props.bindMouseWheel
-			});
+			}, '', 18);
 
 			done();
 		}.bind(this));
