@@ -61,8 +61,43 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				when: function (answers) {
 					return answers.firstSlide === true;
 				}
-			},
-			{
+			}, {
+				type: 'confirm',
+				name: 'pagination',
+				message: 'Do you want to display pagination ?',
+				default: false
+			}, {
+				type: 'list',
+				name: 'ratio',
+				message: 'In which ratio do you want to display your slide ?',
+				choices: ['4/3', '16/9', 'IMAX'],
+				default: 0
+			}, {
+				type: 'input',
+				name: 'minPadding',
+				message: 'What is the minimum padding around your slides ?',
+				default: '0.4em'
+			}, {
+				type: 'input',
+				name: 'transitionDuration',
+				message: "What is the duration of the ruban's scrolling effect ?",
+				default: '1s'
+			}, {
+				type: 'confirm',
+				name: 'stripHtmlInToc',
+				message: "Should HTML tags be stripped when generating the TOC ?",
+				default: false
+			}, {
+				type: 'confirm',
+				name: 'bindClicks',
+				message: "Use left and right clicks to navigate through the ruban ?",
+				default: false
+			}, {
+				type: 'confirm',
+				name: 'bindMouseWheel',
+				message: "Use the mouse wheel to navigate through the ruban ?",
+				default: false
+			}, {
 				type: 'confirm',
 				name: 'livereload',
 				message: 'Do you want livereload ?',
@@ -84,6 +119,16 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			this.config.set('twitter', this.twitter);
 			this.livereload = props.livereload;
 			this.csslint = props.csslint;
+
+			this.rubanOptions = JSON.stringify({
+				pagination : props.pagination,
+				ratio : +props.ratio,
+				minPadding : props.minPadding,
+				transitionDuration : props.transitionDuration,
+				stripHtmlInToc : props.stripHtmlInToc,
+				bindClicks : props.bindClicks,
+				bindMouseWheel : props.bindMouseWheel
+			});
 
 			done();
 		}.bind(this));
