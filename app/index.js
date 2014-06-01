@@ -12,10 +12,10 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.on('end', function () {
 			if (!this.options['skip-install']) {
 				wiredep({
-					directory: 'bower_components',
+					directory: 'app/vendor',
 					bowerJson: this.dest.readJSON('bower.json'),
 					src: 'app/index.html',
-					exclude: [ 'bower_components/ruban/css/ruban-print.min.css' ]
+					exclude: [ 'vendor/ruban/css/ruban-print.min.css' ]
 				});
 			};
 
@@ -72,7 +72,9 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				type: 'list',
 				name: 'ratio',
 				message: 'In which ratio do you want to display your slide ?',
-				choices: ['4/3', '16/9', 'IMAX'],
+				choices: [
+					{name : '4/3', value : 4/3},
+					{name : '16/9', value : 16/9}],
 				default: 0
 			}, {
 				type: 'input',
@@ -123,14 +125,14 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			this.csslint = props.csslint;
 
 			this.rubanOptions = JSON.stringify({
-				pagination : props.pagination,
-				ratio : +props.ratio,
-				minPadding : props.minPadding,
-				transitionDuration : props.transitionDuration,
-				stripHtmlInToc : props.stripHtmlInToc,
-				bindClicks : props.bindClicks,
-				bindMouseWheel : props.bindMouseWheel
-			}, '', 18);
+				"pagination" : props.pagination,
+				"ratio" : props.ratio,
+				"minPadding" : props.minPadding,
+				"transitionDuration" : props.transitionDuration,
+				"stripHtmlInToc" : props.stripHtmlInToc,
+				"bindClicks" : props.bindClicks,
+				"bindMouseWheel" : props.bindMouseWheel
+			}, '', 4);
 
 			done();
 		}.bind(this));
@@ -138,7 +140,9 @@ var RubanGenerator = yeoman.generators.Base.extend({
 
 	app: function () {
 		this.dest.mkdir('app');
+		this.src.copy('bowerrc', '.bowerrc');
 		this.template('_index.html', 'app/index.html');
+		this.template('_app.js', 'app/js/app.js');
 		this.template('_bower.json','bower.json');
 		this.template('_package.json','package.json');
 		if (this.csslint) {
@@ -176,8 +180,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 					options: {
 						watchTask: true,
 						server: {
-							baseDir: ".",
-							index: 'app/index.html'
+							baseDir: "app"
 						}
 					},
 					dev : {
