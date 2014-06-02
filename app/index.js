@@ -72,7 +72,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 
 	installDeps : function () {
 		if (!this.options['skip-install']) {
-			this.installDependencies();
+			this.bowerInstall();
 		}
 	}
 
