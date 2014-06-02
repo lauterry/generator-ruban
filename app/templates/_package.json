@@ -1,6 +1,7 @@
 {
 	"name": "<%=  _.slugify(_.humanize(title))  %>",
-	"devDependencies": {<% if (livereload) { %>
+	"devDependencies": {
+		"grunt": "~0.4.1",<% if (livereload) { %>
 		"grunt-browser-sync": "0.9.1",<% } %><% if (csslint) { %>
 		"grunt-contrib-csslint": "0.2.0",
 		"grunt-contrib-watch": "~0.5.3",<% } %><% if (livereload || csslint) { %>
