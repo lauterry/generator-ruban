@@ -67,6 +67,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 
 	app: function () {
 		this.dest.mkdir('app');
+		this.src.copy('editorconfig','.editorconfig');
 		this.template('_bower.json', 'bower.json');
 		this.template('_index.html', 'app/index.html');
 	}
