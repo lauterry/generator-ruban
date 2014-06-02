@@ -12,9 +12,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.pkg = require('../package.json');
 
 		this.on('end', function () {
-			if (!this.options['skip-install']) {
-				this.installDependencies();
-			}
+
 		});
 	},
 
@@ -69,6 +67,12 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.dest.mkdir('app');
 		this.template('_bower.json', 'bower.json');
 		this.template('_index.html', 'app/index.html');
+	},
+
+	installDeps : function () {
+		if (!this.options['skip-install']) {
+			this.installDependencies();
+		}
 	}
 
 });
