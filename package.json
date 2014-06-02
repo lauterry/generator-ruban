@@ -23,7 +23,8 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "~0.16.0",
+	"wiredep": "~1.6.0",
+    "yeoman-generator": "git://github.com/lauterry/generator.git#load-grunt-tasks",
     "chalk": "~0.4.0",
     "yosay": "^0.1.0"
   },

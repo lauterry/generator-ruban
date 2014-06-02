@@ -4,6 +4,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
+var wiredep = require('wiredep');
 
 
 var RubanGenerator = yeoman.generators.Base.extend({
@@ -12,7 +13,16 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.pkg = require('../package.json');
 
 		this.on('end', function () {
+			if (!this.options['skip-install']) {
+				wiredep({
+					directory: 'app/vendor',
+					bowerJson: this.dest.readJSON('bower.json'),
+					src: 'app/index.html',
+					exclude: [ 'vendor/ruban/css/ruban-print.min.css' ]
+				});
+			};
 
+			this.log(chalk.green("\nGreat, you're now ready to code your prez with Ruban"));
 		});
 	},
 
