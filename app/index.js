@@ -81,6 +81,7 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			this.title = props.title;
 			this.author = props.author;
 			this.twitter = props.twitter;
+			this.config.set('twitter', this.twitter);
 			this.livereload = props.livereload;
 			this.csslint = props.csslint;
 			done();

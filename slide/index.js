@@ -53,6 +53,7 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 		} else if (hasOption(this.type, 'list')) {
 			this._addSlide('listSlideTemplate.html', data);
 		} else if (hasOption(this.type, 'end')) {
+			data.twitter = this.config.get('twitter');
 			this._addSlide('endSlideTemplate.html', data);
 		} else {
 			this._addSlide('textSlideTemplate.html', data);
