@@ -23,6 +23,8 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			};
 
 			this.log(chalk.green("\nGreat, you're now ready to code your prez with Ruban"));
+			this.log(chalk.green("\nStart the server (with livereload) by running :"));
+			this.log(chalk.bgGreen("\n      grunt serve"));
 		});
 	},
 
