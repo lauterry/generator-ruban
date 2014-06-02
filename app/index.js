@@ -60,6 +60,17 @@ var RubanGenerator = yeoman.generators.Base.extend({
 				when: function (answers) {
 					return answers.firstSlide === true;
 				}
+			}, {
+				type: 'confirm',
+				name: 'livereload',
+				message: 'Do you want livereload ?',
+				default: false
+			},
+			{
+				type: 'confirm',
+				name: 'csslint',
+				message: 'Do you want to lint your css ?',
+				default: false
 			}
 		];
 
@@ -68,20 +79,73 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			this.title = props.title;
 			this.author = props.author;
 			this.twitter = props.twitter;
-
+			this.livereload = props.livereload;
+			this.csslint = props.csslint;
 			done();
 		}.bind(this));
 	},
 
 	app: function () {
 		this.dest.mkdir('app');
+		this.src.copy('bowerrc', '.bowerrc');
 		this.template('_bower.json', 'bower.json');
 		this.template('_index.html', 'app/index.html');
+		this.template('_package.json','package.json');
+		if (this.csslint) {
+			this.src.copy("csslintrc", ".csslintrc");
+		}
+	},
+
+	generateGruntfile: function () {
+
+		if (this.csslint) {
+			this.gruntfile.insertConfig('csslint', JSON.stringify(
+				{
+					options: {
+						csslintrc: '.csslintrc'
+					},
+					all : {
+						src : ['app/**/*.css']
+					}
+				}
+			));
+			this.gruntfile.registerTask('validate', 'csslint');
+			this.gruntfile.loadNpmTasks('grunt-contrib-csslint');
+		}
+
+		if (this.livereload) {
+			this.gruntfile.insertConfig('watch', JSON.stringify(
+				{
+					css : {
+						files : ['app/**/*.css']
+					}
+				}
+			));
+			this.gruntfile.insertConfig('browserSync', JSON.stringify(
+				{
+					options: {
+						watchTask: true,
+						server: {
+							baseDir: "app"
+						}
+					},
+					dev : {
+						bsFiles : {
+							src : ['app/**/*.html', 'app/**/*.css', 'app/**/*.js']
+						}
+					}
+				}
+			));
+			this.gruntfile.registerTask('serve', ['browserSync', 'watch']);
+			this.gruntfile.loadNpmTasks('grunt-contrib-watch');
+			this.gruntfile.loadNpmTasks('grunt-browser-sync');
+		}
+
 	},
 
 	installDeps : function () {
 		if (!this.options['skip-install']) {
-			this.bowerInstall();
+			this.installDependencies();
 		}
 	}
 
