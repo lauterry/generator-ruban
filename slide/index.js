@@ -3,7 +3,7 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
-var chalk = require('chalk')
+var chalk = require('chalk');
 var wiredep = require('wiredep');
 
 var hasOption = function (options, option) {
@@ -31,13 +31,37 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 				type: "list",
 				name: 'type',
 				message: 'What kind of slide do you want ?',
-				choices: [  "titleOnly", "list", "text", "end"  ],
+				choices: [  "titleOnly", "list", "text", "image", "code", "end"  ],
 				default: 0
+			},
+			{
+				type: "list",
+				name: 'lang',
+				message: 'Which language ?',
+				choices: [  "javascript", "css", "html", "scss"  ],
+				default: 0,
+				when : function(answers) {
+					if (answers.type === "code" ) {
+						return true;
+					}
+				}
+			},
+			{
+				type: "input",
+				name: 'img',
+				message: 'Where is the image ?',
+				when : function(answers) {
+					if (answers.type === "image" ) {
+						return true;
+					}
+				}
 			}
 		];
 
 		this.prompt(prompts, function (props) {
 			this.type = props.type;
+			this.lang = props.lang;
+			this.img = props.img;
 			done();
 		}.bind(this));
 	},
@@ -54,6 +78,12 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 			this._addSlide('listSlideTemplate.html', data);
 		} else if (hasOption(this.type, 'end')) {
 			this._addSlide('endSlideTemplate.html', data);
+		} else if (hasOption(this.type, 'image')) {
+			data.img = this.img;
+			this._addSlide('imgSlide.html', data);
+		} else if (hasOption(this.type, 'code')) {
+			data.lang = this.lang;
+			this._addSlide('codeSlide.html', data);
 		} else {
 			this._addSlide('textSlideTemplate.html', data);
 		}
