@@ -1,0 +1,8 @@
+Description:
+	Creates a slide
+
+Example:
+    yo ruban:slide slideTitle
+
+    This will update:
+        app/index.html: add a slide to your presentation with a title

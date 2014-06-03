@@ -1,0 +1,13 @@
+Description:
+	Creates a HTML5 presentation with RubanJS
+
+Example:
+    yo ruban
+
+    This will create:
+    	package.json: Development packages installed by npm
+    	bower.json: Web packages installed by bower
+        .bowerrc
+    	Gruntfile.js
+
+        app/index.html
