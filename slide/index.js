@@ -31,13 +31,26 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 				type: "list",
 				name: 'type',
 				message: 'What kind of slide do you want ?',
-				choices: [  "titleOnly", "list", "text", "end"  ],
+				choices: [  "titleOnly", "list", "text", "code",  "end"  ],
 				default: 0
+			},
+			{
+				type: "list",
+				name: 'lang',
+				message: 'Which language ?',
+				choices: [  "javascript", "css", "html", "scss"  ],
+				default: 0,
+				when : function(answers) {
+					if (answers.type === "code" ) {
+						return true;
+					}
+				}
 			}
 		];
 
 		this.prompt(prompts, function (props) {
 			this.type = props.type;
+			this.lang = props.lang;
 			done();
 		}.bind(this));
 	},
@@ -55,6 +68,9 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 		} else if (hasOption(this.type, 'end')) {
 			data.twitter = this.config.get('twitter');
 			this._addSlide('endSlideTemplate.html', data);
+		} else if (hasOption(this.type, 'code')) {
+			data.lang = this.lang;
+			this._addSlide('codeSlide.html', data);
 		} else {
 			this._addSlide('textSlideTemplate.html', data);
 		}
