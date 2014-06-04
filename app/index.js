@@ -8,14 +8,6 @@ var chalk = require('chalk');
 
 var RubanGenerator = yeoman.generators.Base.extend({
 
-	init: function () {
-		this.pkg = require('../package.json');
-
-		this.on('end', function () {
-
-		});
-	},
-
 	askFor: function () {
 		var done = this.async();
 
