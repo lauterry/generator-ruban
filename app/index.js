@@ -10,19 +10,19 @@ var wiredep = require('wiredep');
 var RubanGenerator = yeoman.generators.Base.extend({
 
 	init: function () {
-		this.pkg = require('../package.json');
 
 		this.on('end', function () {
 			if (!this.options['skip-install']) {
-				wiredep({
-					directory: 'app/vendor',
-					bowerJson: this.dest.readJSON('bower.json'),
-					src: 'app/index.html',
-					exclude: [ 'vendor/ruban/css/ruban-print.min.css' ]
-				});
+				this.bowerInstall(null, null, function () {
+					wiredep({
+						directory: 'app/vendor',
+						bowerJson: this.dest.readJSON('bower.json'),
+						src: 'app/index.html',
+						exclude: [ 'vendor/ruban/css/ruban-print.min.css' ]
+					});
+					this.log(chalk.green("\nGreat, you're now ready to code your prez with Ruban"));
+				}.bind(this));
 			};
-
-			this.log(chalk.green("\nGreat, you're now ready to code your prez with Ruban"));
 		});
 	},
 
@@ -78,12 +78,6 @@ var RubanGenerator = yeoman.generators.Base.extend({
 		this.src.copy('bowerrc', '.bowerrc');
 		this.template('_bower.json', 'bower.json');
 		this.template('_index.html', 'app/index.html');
-	},
-
-	installDeps : function () {
-		if (!this.options['skip-install']) {
-			this.bowerInstall();
-		}
 	}
 
 });
