@@ -7,15 +7,6 @@ var chalk = require('chalk');
 
 
 var RubanGenerator = yeoman.generators.Base.extend({
-	init: function () {
-		this.pkg = require('../package.json');
-
-		this.on('end', function () {
-			if (!this.options['skip-install']) {
-				this.installDependencies();
-			}
-		});
-	},
 
 	askFor: function () {
 		var done = this.async();
@@ -46,20 +37,8 @@ var RubanGenerator = yeoman.generators.Base.extend({
 			console.log(JSON.stringify(props));
 			done();
 		}.bind(this));
-	},
-
-	app: function () {
-		this.mkdir('app');
-		this.mkdir('app/templates');
-
-		this.copy('_package.json', 'package.json');
-		this.copy('_bower.json', 'bower.json');
-	},
-
-	projectfiles: function () {
-		this.copy('editorconfig', '.editorconfig');
-		this.copy('jshintrc', '.jshintrc');
 	}
+
 });
 
 module.exports = RubanGenerator;
