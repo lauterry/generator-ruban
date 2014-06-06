@@ -18,6 +18,8 @@ var SlideGenerator = yeoman.generators.NamedBase.extend({
 
 	init: function () {
 
+		this.src.copy('cat.gif', 'app/cat.gif');
+
 		this.on('end', function () {
 			this.log(chalk.green("Your slide has been added."));
 		});
